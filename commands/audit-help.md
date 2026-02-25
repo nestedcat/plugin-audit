@@ -1,7 +1,7 @@
 ---
 description: Show detailed information about a specific capability
 argument-hint: <capability-name>
-allowed-tools: Bash(python:*)
+allowed-tools: Bash(python ${CLAUDE_PLUGIN_ROOT}/scripts/scan.py:*)
 ---
 
 Show detailed information about a specific Claude Code capability.

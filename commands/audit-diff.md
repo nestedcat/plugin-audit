@@ -1,6 +1,6 @@
 ---
 description: Compare current capabilities against a saved snapshot to detect changes
-allowed-tools: Bash(python:*)
+allowed-tools: Bash(python ${CLAUDE_PLUGIN_ROOT}/scripts/scan.py:*)
 ---
 
 Compare the current Claude Code capabilities against a previously saved snapshot.

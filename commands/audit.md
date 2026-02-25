@@ -1,6 +1,6 @@
 ---
 description: Scan all installed plugins, commands, agents, and skills to generate a capability inventory
-allowed-tools: Bash(python:*)
+allowed-tools: Bash(python ${CLAUDE_PLUGIN_ROOT}/scripts/scan.py:*)
 ---
 
 Scan all Claude Code capabilities across installed plugins, user-level configurations, and project-level configurations.

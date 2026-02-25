@@ -1,6 +1,6 @@
 ---
 description: Assess risk levels for all installed plugins, commands, agents, and skills
-allowed-tools: Bash(python:*)
+allowed-tools: Bash(python ${CLAUDE_PLUGIN_ROOT}/scripts/scan.py:*)
 ---
 
 Scan all Claude Code capabilities and output a risk assessment report.
