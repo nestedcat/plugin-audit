@@ -29,12 +29,33 @@ Scan all installed plugins, user commands, agents, and skills — generate a str
 - **User-level**: `~/.claude/commands/`, `agents/`, `skills/`
 - **Project-level**: `.claude/commands/`, `agents/`, `skills/`
 
-## Example usage
+## Example output
+
+Running `/audit` produces a structured capability inventory like this:
+
+| Name | Type | Source | Provider | Invocation |
+|------|------|--------|----------|------------|
+| frontend-design | skill | plugin:frontend-design | claude-plugins-official | Auto-triggered by model |
+| setup_semgrep_plugin | command | plugin:semgrep-plugin | claude-plugins-official | `/setup_semgrep_plugin` |
+| code-review | command | plugin:code-review | claude-plugins-official | `/code-review` |
+| code-simplifier | agent | plugin:code-simplifier | claude-plugins-official | Use code-simplifier agent |
+| revise-claude-md | command | plugin:claude-md-management | claude-plugins-official | `/revise-claude-md` |
+| audit | command | plugin:plugin-audit | nestedcat-claude-marketplace | `/audit` |
+| PostToolUse:Write\|Edit | hook | plugin:semgrep-plugin | claude-plugins-official | Auto-trigger |
+| planner | agent | user | — | Use planner agent |
+| tdd-guide | agent | user | — | Use tdd-guide agent |
+
+**Statistics**: 18 capabilities — 6 commands, 3 skills, 3 agents, 6 hooks · from 6 plugins + user-level
+
+**Notable findings**:
+- `claude-md-improver` has broad permissions including `Bash`
+- `semgrep-plugin` registers 4 hooks that auto-trigger on tool use and session start
+
+The report also includes a **Cache Health** section showing orphaned plugin versions, version conflicts, and blocked plugins.
+
+### Other commands
 
 ```
-> /audit
-# Shows all capabilities grouped by source (Plugins / User / Project)
-
 > /audit-help code-review
 # Shows detailed info: description, permissions, invocation, source path
 
@@ -123,12 +144,33 @@ This tool provides automated capability scanning and risk scoring as a convenien
 - **用户级**: `~/.claude/commands/`、`agents/`、`skills/`
 - **项目级**: `.claude/commands/`、`agents/`、`skills/`
 
-## 使用示例
+## 输出示例
+
+运行 `/audit` 后，Claude 会将扫描结果整理为如下能力清单表格：
+
+| 名称 | 类型 | 来源 | 提供者 | 调用方式 |
+|------|------|------|--------|----------|
+| frontend-design | skill | plugin:frontend-design | claude-plugins-official | 模型自动触发 |
+| setup_semgrep_plugin | command | plugin:semgrep-plugin | claude-plugins-official | `/setup_semgrep_plugin` |
+| code-review | command | plugin:code-review | claude-plugins-official | `/code-review` |
+| code-simplifier | agent | plugin:code-simplifier | claude-plugins-official | Use code-simplifier agent |
+| revise-claude-md | command | plugin:claude-md-management | claude-plugins-official | `/revise-claude-md` |
+| audit | command | plugin:plugin-audit | nestedcat-claude-marketplace | `/audit` |
+| PostToolUse:Write\|Edit | hook | plugin:semgrep-plugin | claude-plugins-official | 自动触发 |
+| planner | agent | user | — | Use planner agent |
+| tdd-guide | agent | user | — | Use tdd-guide agent |
+
+**统计**: 18 个能力 — 6 命令、3 技能、3 Agent、6 Hook · 来自 6 个插件 + 用户级
+
+**重要发现**：
+- `claude-md-improver` 拥有包括 `Bash` 在内的广泛权限
+- `semgrep-plugin` 注册了 4 个 Hook，在工具调用和会话启动时自动触发
+
+报告还包含 **缓存健康** 部分，显示孤立的插件版本、版本冲突和被封锁的插件。
+
+### 其他命令
 
 ```
-> /audit
-# 按来源分组显示所有能力（插件 / 用户级 / 项目级）
-
 > /audit-help code-review
 # 显示详细信息：描述、权限、调用方式、源文件路径
 
