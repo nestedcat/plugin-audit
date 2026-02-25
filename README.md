@@ -7,7 +7,11 @@ Scan all installed plugins, user commands, agents, and skills — generate a str
 ## Install
 
 ```bash
-/plugins marketplace add plugin-audit
+# 1. Add the marketplace
+/plugins marketplace add nestedcat/nestedcat-claude-marketplace
+
+# 2. Install the plugin
+/plugins install plugin-audit@nestedcat-claude-marketplace
 ```
 
 ## Commands
@@ -97,7 +101,11 @@ This tool provides automated capability scanning and risk scoring as a convenien
 ## 安装
 
 ```bash
-/plugins marketplace add plugin-audit
+# 1. 添加插件市场
+/plugins marketplace add nestedcat/nestedcat-claude-marketplace
+
+# 2. 安装插件
+/plugins install plugin-audit@nestedcat-claude-marketplace
 ```
 
 ## 命令
