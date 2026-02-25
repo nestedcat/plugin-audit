@@ -1,0 +1,177 @@
+# plugin-audit
+
+> Capability inventory & security audit tool for Claude Code
+
+Scan all installed plugins, user commands, agents, and skills — generate a structured capability inventory, risk report, and change detection.
+
+## Install
+
+```bash
+/plugins marketplace add plugin-audit
+```
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `/audit` | Full capability scan with cache health report |
+| `/audit-help <name>` | Detailed info for a specific capability |
+| `/audit-risk` | Risk assessment report for all capabilities |
+| `/audit-diff` | Compare current state against a saved snapshot |
+
+## What it scans
+
+- **Plugins**: `~/.claude/plugins/installed_plugins.json` → each plugin's commands, skills, agents, hooks
+- **User-level**: `~/.claude/commands/`, `agents/`, `skills/`
+- **Project-level**: `.claude/commands/`, `agents/`, `skills/`
+
+## Example usage
+
+```
+> /audit
+# Shows all capabilities grouped by source (Plugins / User / Project)
+
+> /audit-help code-review
+# Shows detailed info: description, permissions, invocation, source path
+
+> /audit-risk
+# Shows risk scores: CRITICAL / HIGH / MEDIUM / LOW
+
+> /audit-diff
+# Shows added / removed / changed capabilities since last snapshot
+```
+
+## Risk scoring
+
+| Permission | Score |
+|------------|-------|
+| Bash (unrestricted) | 15 |
+| Bash (pattern) | 8 |
+| Write | 6 |
+| Edit / NotebookEdit | 5 |
+| WebFetch | 4 |
+| Task / WebSearch | 3 |
+| Read | 2 |
+| Glob / Grep | 1 |
+| Hook (auto-trigger) | +3 |
+| Hook (wildcard) | +2 |
+
+**Levels**: CRITICAL (≥15) · HIGH (≥10) · MEDIUM (≥5) · LOW (<5)
+
+## Requirements
+
+- Claude Code with Plugin support
+- Python 3.11+ (stdlib only, zero dependencies)
+
+## Development
+
+```bash
+# Run tests
+cd scripts && python3 -m unittest test_scan -v
+
+# Run scan directly
+python3 scripts/scan.py --all
+python3 scripts/scan.py --risk
+python3 scripts/scan.py --detail <name>
+
+# Load plugin locally
+claude --plugin-dir /path/to/plugin-audit
+```
+
+## Disclaimer
+
+This tool provides automated capability scanning and risk scoring as a convenience. It is **not** a substitute for professional security auditing. Risk scores are heuristic-based and may not capture all threats. Use at your own discretion.
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+# plugin-audit
+
+> Claude Code 能力索引与安全审计工具
+
+扫描所有已安装的插件、用户命令、Agent 和 Skill，生成结构化能力清单、风险报告和变更检测。
+
+## 安装
+
+```bash
+/plugins marketplace add plugin-audit
+```
+
+## 命令
+
+| 命令 | 说明 |
+|------|------|
+| `/audit` | 全面扫描，输出能力清单和缓存健康报告 |
+| `/audit-help <name>` | 查询单个能力的详细信息 |
+| `/audit-risk` | 所有能力的风险评估报告 |
+| `/audit-diff` | 与历史快照对比，检测变更 |
+
+## 扫描范围
+
+- **插件**: `~/.claude/plugins/installed_plugins.json` → 每个插件的命令、技能、Agent、Hook
+- **用户级**: `~/.claude/commands/`、`agents/`、`skills/`
+- **项目级**: `.claude/commands/`、`agents/`、`skills/`
+
+## 使用示例
+
+```
+> /audit
+# 按来源分组显示所有能力（插件 / 用户级 / 项目级）
+
+> /audit-help code-review
+# 显示详细信息：描述、权限、调用方式、源文件路径
+
+> /audit-risk
+# 显示风险评分：CRITICAL / HIGH / MEDIUM / LOW
+
+> /audit-diff
+# 显示新增 / 删除 / 变更的能力（与上次快照对比）
+```
+
+## 风险评分
+
+| 权限 | 分值 |
+|------|------|
+| Bash（无限制） | 15 |
+| Bash（受限模式） | 8 |
+| Write | 6 |
+| Edit / NotebookEdit | 5 |
+| WebFetch | 4 |
+| Task / WebSearch | 3 |
+| Read | 2 |
+| Glob / Grep | 1 |
+| Hook（自动触发） | +3 |
+| Hook（通配匹配） | +2 |
+
+**风险等级**: CRITICAL (≥15) · HIGH (≥10) · MEDIUM (≥5) · LOW (<5)
+
+## 环境要求
+
+- 支持插件的 Claude Code
+- Python 3.11+（仅标准库，零外部依赖）
+
+## 开发
+
+```bash
+# 运行测试
+cd scripts && python3 -m unittest test_scan -v
+
+# 直接运行扫描
+python3 scripts/scan.py --all
+python3 scripts/scan.py --risk
+python3 scripts/scan.py --detail <name>
+
+# 本地加载插件测试
+claude --plugin-dir /path/to/plugin-audit
+```
+
+## 免责声明
+
+本工具提供自动化的能力扫描和风险评分，仅作为辅助参考。它**不能**替代专业的安全审计。风险评分基于启发式规则，可能无法覆盖所有威胁。请自行判断后使用。
+
+## 许可证
+
+[MIT](LICENSE)

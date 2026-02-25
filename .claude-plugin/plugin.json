@@ -1,0 +1,8 @@
+{
+  "name": "plugin-audit",
+  "description": "Scan all installed plugins, commands, agents, and skills to generate capability inventories and risk reports",
+  "version": "0.1.0",
+  "author": {
+    "name": "xy"
+  }
+}
